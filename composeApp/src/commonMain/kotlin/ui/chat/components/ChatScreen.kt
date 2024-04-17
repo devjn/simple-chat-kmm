@@ -2,6 +2,7 @@
 
 package com.jfayz.myapp.ui.chat.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -164,6 +167,7 @@ fun ProfileNameBar(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
@@ -173,18 +177,16 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            for (index in messages.indices) {
-                val message = messages[index]
+            itemsIndexed(
+                items = messages,
+                key = { index, item -> item.timestamp },
+                { index, item -> null }) { index, message ->
+                // TODO: Use Modifier.animateItem() from compose 1.7.0
+                ChatMessage(Modifier.animateItemPlacement(), message)
 
-                // Use timestamp as key for now. Changed to ID later
-                item(key = message.timestamp) {
-                    ChatMessage(message)
-                }
-
-                if (shouldAddHeader(message, index, messages)) {
-                    item(key = "header${message.timestamp}") {
-                        DayHeader(message.timestamp)
-                    }
+                val shouldDisplayHeader = remember(message, index) {shouldAddHeader(message, index, messages) }
+                if (shouldDisplayHeader) {
+                    DayHeader(message.timestamp)
                 }
             }
         }
@@ -192,15 +194,15 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
 }
 
 @Composable
-fun ChatMessage(msg: Message) {
+fun ChatMessage(modifier: Modifier, msg: Message) {
     val isUserMe = msg.isMine()
-    val modifier = if (isUserMe) {
-        Modifier.padding(start = 72.dp)
+    val boxModifier = if (isUserMe) {
+        modifier.padding(start = 72.dp)
     } else {
-        Modifier.padding(end = 72.dp)
+        modifier.padding(end = 72.dp)
     }
     Box(
-        modifier = modifier
+        modifier = boxModifier
             .fillMaxWidth()
             .padding(
                 bottom = 8.dp, // Space between bubbles

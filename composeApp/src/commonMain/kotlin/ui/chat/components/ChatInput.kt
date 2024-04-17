@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -64,6 +65,15 @@ fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier, re
                         resetScroll()
                     }
                 },
+                onImeSendAction = {
+                    if (textState.text.isNotBlank()) {
+                        onMessageSent(textState.text)
+                        // Reset text field
+                        textState = TextFieldValue()
+                        // Move scroll to bottom
+                        resetScroll()
+                    }
+                },
                 modifier = Modifier.weight(1f)
             )
             // Send button
@@ -96,6 +106,7 @@ private fun RowScope.UserInputTextField(
     textFieldValue: TextFieldValue,
     onTextChanged: (TextFieldValue) -> Unit,
     onTextFieldFocused: (Boolean) -> Unit,
+    onImeSendAction: () -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     var isFocused by remember { mutableStateOf(false) }
@@ -113,8 +124,7 @@ private fun RowScope.UserInputTextField(
         BasicTextField(
             value = textFieldValue,
             onValueChange = { onTextChanged(it) },
-            modifier =
-            modifier
+            modifier = modifier
                 .semantics { contentDescription = "Chat input" }
                 .padding(8.dp)
                 .fillMaxWidth()
@@ -124,13 +134,15 @@ private fun RowScope.UserInputTextField(
                     }
                     isFocused = state.isFocused
                 },
-            keyboardOptions =
-            KeyboardOptions(
+            keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 capitalization = KeyboardCapitalization.Sentences,
                 imeAction = ImeAction.Send
             ),
-            maxLines = 1,
+            keyboardActions = KeyboardActions(
+                onSend = { onImeSendAction() }
+            ),
+            maxLines = 4,
             cursorBrush = SolidColor(LocalContentColor.current),
             textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.tertiary)
         )
