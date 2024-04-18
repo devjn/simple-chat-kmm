@@ -6,7 +6,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.model.Message
-import com.jfayz.myapp.ui.chat.components.ChatScreenContent
+import com.jfayz.testchat.ui.chat.ChatScreenContent
 import com.jfayz.myapp.ui.chat.components.ChatScreenPreview
 import kotlin.test.Test
 import kotlin.test.assertEquals

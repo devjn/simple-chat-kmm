@@ -1,4 +1,4 @@
-package data
+package com.jfayz.testchat.data
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.jfayz.chat.data.DummyData

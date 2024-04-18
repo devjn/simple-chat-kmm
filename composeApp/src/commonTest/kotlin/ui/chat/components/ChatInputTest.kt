@@ -3,7 +3,7 @@ package ui.chat.components
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
-import com.jfayz.myapp.ui.chat.components.ChatInput
+import com.jfayz.testchat.ui.chat.components.ChatInput
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

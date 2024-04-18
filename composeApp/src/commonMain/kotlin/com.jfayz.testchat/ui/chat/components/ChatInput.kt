@@ -1,4 +1,4 @@
-package com.jfayz.myapp.ui.chat.components
+package com.jfayz.testchat.ui.chat.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -36,14 +36,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
-@Composable
-fun ChatInputPreview() {
-    ChatInput(onMessageSent = {})
-}
 
 @Composable
 fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier, resetScroll: () -> Unit = {}) {

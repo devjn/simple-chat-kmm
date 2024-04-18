@@ -1,4 +1,4 @@
-package data
+package com.jfayz.testchat.data
 
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.dao.MessageDao

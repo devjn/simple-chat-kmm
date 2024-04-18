@@ -1,4 +1,4 @@
-package com.jfayz.myapp.ui.theme
+package com.jfayz.testchat.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

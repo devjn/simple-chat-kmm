@@ -1,10 +1,10 @@
-package ai
+package com.jfayz.testchat.ai
 
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.Profile
 import com.jfayz.domain.repo.ChatRepository
-import data.Provider
+import com.jfayz.testchat.data.Provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.jfayz.myapp.ui.base.components
+package com.jfayz.testchat.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons

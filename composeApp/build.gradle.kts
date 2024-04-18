@@ -64,7 +64,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+//            implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
             implementation(libs.generativeai.google)
         }
@@ -94,6 +94,10 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+    }
+    buildFeatures { compose = true }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packaging {
         resources {

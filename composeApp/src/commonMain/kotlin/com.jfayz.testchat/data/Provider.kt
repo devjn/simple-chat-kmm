@@ -1,6 +1,6 @@
-package data
+package com.jfayz.testchat.data
 
-import ai.GeminiProfile
+import com.jfayz.testchat.ai.GeminiProfile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 

@@ -1,4 +1,4 @@
-package ai
+package com.jfayz.testchat.ai
 
 import KotlinProject.composeApp.BuildConfig
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel

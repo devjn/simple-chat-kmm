@@ -1,4 +1,4 @@
-package ui.chat.components
+package com.jfayz.testchat.ui.chat.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.Duration.Companion.hours
 
 @Composable
@@ -32,12 +31,6 @@ fun DayHeader(timestamp: Long) {
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.77f)
     )
-}
-
-@Preview
-@Composable
-fun DayHeaderPrev() {
-    DayHeader(Clock.System.now().epochSeconds)
 }
 
 private val oneHourInMillis = 1.hours.inWholeMilliseconds
