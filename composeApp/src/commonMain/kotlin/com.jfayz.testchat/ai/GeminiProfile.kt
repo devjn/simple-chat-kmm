@@ -1,20 +1,23 @@
 package com.jfayz.testchat.ai
 
+import androidx.compose.runtime.Immutable
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.Profile
+import com.jfayz.domain.model.ProfileId
 import com.jfayz.domain.repo.ChatRepository
 import com.jfayz.testchat.data.Provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+@Immutable
 class GeminiProfile(
     name: String,
     private val chatRepo: ChatRepository,
     private val dataScope: CoroutineScope = Provider.dataScope,
     private val uiScope: CoroutineScope = Provider.sameScope
-) : Profile(100L, name, "AI Profile") {
+) : Profile(100L, name/*, "AI Profile"*/) {
 
     private val gemini = GeminiApi()
 

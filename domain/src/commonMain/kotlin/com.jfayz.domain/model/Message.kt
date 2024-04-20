@@ -1,28 +1,14 @@
 package com.jfayz.domain.model
 
-/*Empty constructor required by Realm*/
-class Message() {
-    var content: String = ""
-    var timestamp: Long = 0
+import androidx.compose.runtime.Immutable
 
-    /** UID for author */
-    var author: ProfileId = ProfileId(0)
-
-    /** UID for recipient */
-    var to: ProfileId = ProfileId(0)
-
-    constructor(content: String, timestamp: Long, authorId: ProfileId, toId: ProfileId) : this() {
-        this.content = content
-        this.timestamp = timestamp
-        this.author = authorId
-        this.to = toId
-    }
-
-    constructor(content: String, timestamp: Long) : this() {
-        this.content = content
-        this.timestamp = timestamp
-    }
-}
+@Immutable
+data class Message(
+    val content: String,
+    val timestamp: Long,
+    val author: ProfileId,
+    val to: ProfileId,
+)
 
 fun Message.isMine(): Boolean {
     // Dummy check by id.

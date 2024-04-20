@@ -13,8 +13,8 @@ import kotlin.time.Duration.Companion.minutes
  * Dummy data for tests.
  */
 object DummyData {
-    val myProfile = Profile(1, "Me", "Hello, I'm here!")
-    val friendProfile = Profile(2, "Sarah", "Hello, I'm there!")
+    val myProfile = Profile(1, "Me")
+    val friendProfile = Profile(2, "Sarah")
 
     private val date = Clock.System.now()
 

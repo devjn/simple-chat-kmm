@@ -108,8 +108,7 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
         LazyColumn(
             reverseLayout = true,
             state = scrollState,
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             itemsIndexed(
                 items = messages,

@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeMultiplatform)
     id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
@@ -50,6 +50,13 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings {
+                optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
+
         val desktopMain by getting
 
         androidMain.dependencies {
@@ -65,6 +72,9 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
 //            implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.generativeai.google)
         }
