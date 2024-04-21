@@ -9,10 +9,11 @@ import com.jfayz.domain.model.Profile
 import com.jfayz.testchat.ui.chat.ChatViewModel
 import com.jfayz.testchat.ui.chat.ChatScreenContent
 import com.jfayz.testchat.data.Provider
+import com.jfayz.testchat.ui.theme.AppTheme
 
 @Composable
 fun App() = withViewModelStoreOwner {
-    MaterialTheme {
+    AppTheme {
         AiChatScreen()
     }
 }
