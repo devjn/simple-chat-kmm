@@ -23,12 +23,14 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.Profile
+import com.jfayz.domain.model.isMine
 import com.jfayz.testchat.ui.chat.components.ChatInput
 import com.jfayz.testchat.ui.chat.components.ChatMessage
 import com.jfayz.testchat.ui.chat.components.DayHeader
@@ -58,6 +60,16 @@ fun ChatScreenContent(
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(messages) {
+        // If the new message is mine, scroll to it, otherwise animate
+        val isNewMessageMine = messages.firstOrNull()?.isMine() ?: return@LaunchedEffect
+        if (isNewMessageMine) {
+            scrollState.scrollToItem(0)
+        } else {
+            scrollState.animateScrollToItem(0)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -89,7 +101,7 @@ fun ChatScreenContent(
                 onMessageSent = onMessageSent,
                 resetScroll = {
                     scope.launch {
-                        scrollState.scrollToItem(0)
+//                        scrollState.scrollToItem(0)
                     }
                 },
                 // let this element handle the padding so that the elevation is shown behind the navigation bar

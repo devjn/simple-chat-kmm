@@ -21,7 +21,7 @@ object DummyData {
     fun initialMessages(
         me: ProfileId = myProfile.uid,
         friend: ProfileId = ProfileId(100L),
-    ) = mutableStateListOf(
+    ) = mutableListOf(
         Message("Hello!", date.minus(1.days).toEpochMilliseconds(), me, friend),
         Message("Hi!", date.minus(4.hours).toEpochMilliseconds(), friend, me),
         Message(

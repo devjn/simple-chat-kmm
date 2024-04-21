@@ -22,7 +22,7 @@ val VIEW_MODEL_FACTORY = viewModelFactory {
 }
 
 fun getChatViewModelFactory(profile: Profile) = viewModelFactory {
-    initializer { ChatViewModel(Provider.chatRepo, profile) }
+    initializer { ChatViewModel(profile, Provider.chatRepo, Provider.getAiResponseUseCase) }
 }
 
 private class ComposeViewModelStoreOwner: ViewModelStoreOwner {

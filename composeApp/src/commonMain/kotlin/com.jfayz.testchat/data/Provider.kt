@@ -1,6 +1,11 @@
 package com.jfayz.testchat.data
 
-import com.jfayz.testchat.ai.GeminiProfile
+import Platform
+import com.jfayz.domain.model.Profile
+import com.jfayz.domain.model.toProfileId
+import com.jfayz.domain.usecase.GenerateAiResponseUseCase
+import com.jfayz.testchat.ai.GeminiApi
+import getIODispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -8,9 +13,13 @@ import kotlinx.coroutines.Dispatchers
 object Provider {
     val dataScope = CoroutineScope(Dispatchers.Default)
     val sameScope = CoroutineScope(Dispatchers.Unconfined)
+    val dispatcherIO by lazy { getIODispatcher() }
 
     val chatRepo by lazy { ChatRepositoryImpl(InMemoryMessageDao()) }
-    fun getAiProfile() = GeminiProfile(name = "Gemini", chatRepo)
+    val getAiResponseUseCase: GenerateAiResponseUseCase
+        get() = GenerateAiResponseUseCase(GeminiApi(), chatRepo, dispatcherIO)
+
+    fun getAiProfile() = Profile.ai(name = "Gemini", uid = 100L.toProfileId())
 
 
 //    val dataProvider: DataProvider by lazy { DataProvider(realm) }
