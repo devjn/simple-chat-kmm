@@ -1,6 +1,5 @@
 package com.jfayz.testchat.data
 
-import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.dao.MessageDao
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.ProfileId
@@ -9,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 
 class ChatRepositoryImpl(
-    private val messageDao: MessageDao
+    private val messageDao: MessageDao,
+    private val clock: Clock = Clock.System,
 ) : ChatRepository {
 
     override fun getMessages(profileId: ProfileId): Flow<List<Message>> =
@@ -25,7 +25,7 @@ class ChatRepositoryImpl(
         toProfile: ProfileId,
     ) = Message(
         message,
-        Clock.System.now().epochSeconds,
+        clock.now(),
         fromProfile,
         toProfile,
     )

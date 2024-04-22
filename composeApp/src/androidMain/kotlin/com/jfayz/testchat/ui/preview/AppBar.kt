@@ -21,7 +21,7 @@ private fun AppBarPreview() {
 @Preview
 @Composable
 fun AppBarPreviewDark() {
-    AppTheme(isDarkTheme = true) {
+    AppTheme(useDarkTheme = true) {
         AppBar(title = { Text("Preview!") })
     }
 }

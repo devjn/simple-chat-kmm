@@ -6,7 +6,6 @@ import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.model.Profile
 import com.jfayz.domain.repo.ChatRepository
 import com.jfayz.domain.usecase.GenerateAiResponseUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ChatViewModel(

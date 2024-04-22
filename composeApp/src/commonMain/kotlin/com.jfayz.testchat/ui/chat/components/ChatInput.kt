@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
@@ -43,9 +43,20 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier, resetScroll: () -> Unit = {}) {
+fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier) {
     var textState by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue())
+    }
+    // Fix for ImeAction.Send not clearing the text field on trigger.
+    var keyboardSendTriggered by remember { mutableStateOf(false) }
+
+    val onSendAction = {
+        if (textState.text.isNotBlank()) {
+            println("onSendAction is called")
+            onMessageSent(textState.text)
+            // Reset text field
+            textState = TextFieldValue()
+        }
     }
 
     Surface(tonalElevation = 2.dp, contentColor = MaterialTheme.colorScheme.primary) {
@@ -55,24 +66,22 @@ fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier, re
                 .padding(8.dp)
         ) {
             UserInputTextField(
+                modifier = Modifier.weight(1f),
                 textFieldValue = textState,
-                onTextChanged = { textState = it },
-                onTextFieldFocused = { focused ->
-                    if (focused) {
-                        resetScroll()
-                    }
-                },
-                onImeSendAction = {
-                    if (textState.text.isNotBlank()) {
-                        onMessageSent(textState.text)
+                onTextChanged = {
+                    if (keyboardSendTriggered) {
                         // Reset text field
                         textState = TextFieldValue()
-                        // Move scroll to bottom
-                        resetScroll()
+                        keyboardSendTriggered = false
+                    } else {
+                        textState = it
                     }
                 },
-
-                modifier = Modifier.weight(1f)
+                onSendAction = onSendAction,
+                keyboardActions = KeyboardActions(onSend = {
+                    keyboardSendTriggered = true
+                    onSendAction()
+                }),
             )
             // Send button
             FilledIconButton(
@@ -80,13 +89,7 @@ fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier, re
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .testTag("SendButton"),
-                onClick = {
-                    onMessageSent(textState.text)
-                    // Reset text field
-                    textState = TextFieldValue()
-                    // Move scroll to bottom
-                    resetScroll()
-                }
+                onClick = onSendAction
             ) {
                 Icon(
                     Icons.AutoMirrored.Filled.Send,
@@ -103,8 +106,8 @@ private fun RowScope.UserInputTextField(
     modifier: Modifier = Modifier,
     textFieldValue: TextFieldValue,
     onTextChanged: (TextFieldValue) -> Unit,
-    onTextFieldFocused: (Boolean) -> Unit,
-    onImeSendAction: () -> Unit,
+    onSendAction: () -> Unit,
+    keyboardActions: KeyboardActions,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     var isFocused by remember { mutableStateOf(false) }
@@ -126,20 +129,21 @@ private fun RowScope.UserInputTextField(
                 .semantics { contentDescription = "Chat input" }
                 .padding(8.dp)
                 .fillMaxWidth()
-                .onFocusChanged { state ->
-                    if (isFocused != state.isFocused) {
-                        onTextFieldFocused(state.isFocused)
+                .onFocusChanged { state -> isFocused = state.isFocused }
+                .onKeyEvent { event ->
+                    if (event.key == Key.Enter) {
+                        onSendAction()
+                        true
+                    } else {
+                        false
                     }
-                    isFocused = state.isFocused
                 },
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 capitalization = KeyboardCapitalization.Sentences,
                 imeAction = ImeAction.Send
             ),
-            keyboardActions = KeyboardActions(
-                onSend = { onImeSendAction() }
-            ),
+            keyboardActions = keyboardActions,
             maxLines = 4,
             cursorBrush = SolidColor(LocalContentColor.current),
             textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.tertiary)

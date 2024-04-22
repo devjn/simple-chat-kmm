@@ -1,19 +1,16 @@
 package com.jfayz.testchat.data
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.dao.MessageDao
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.ProfileId
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 class InMemoryMessageDao : MessageDao {
     // Todo: Add separation by profiles
-    private var messages : List<Message> = DummyData.initialMessages()/*.toMutableStateList()*/
+    private var messages : List<Message> = DummyData.initialMessages()
     private val _messages = MutableSharedFlow<List<Message>>(
         replay = 1,
         extraBufferCapacity = 0,

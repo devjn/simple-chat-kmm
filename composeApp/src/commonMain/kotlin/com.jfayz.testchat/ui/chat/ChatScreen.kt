@@ -99,11 +99,6 @@ fun ChatScreenContent(
             )
             ChatInput(
                 onMessageSent = onMessageSent,
-                resetScroll = {
-                    scope.launch {
-//                        scrollState.scrollToItem(0)
-                    }
-                },
                 // let this element handle the padding so that the elevation is shown behind the navigation bar
                 modifier = Modifier
                     .navigationBarsPadding()
@@ -124,7 +119,7 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
         ) {
             itemsIndexed(
                 items = messages,
-                key = { index, item -> item.timestamp },
+                key = { index, message -> message.timestamp },
                 { index, item -> null }) { index, message ->
                 // TODO: Use Modifier.animateItem() from compose 1.7.0
                 ChatMessage(Modifier.animateItemPlacement(), message)
