@@ -41,5 +41,5 @@ fun ChatInputPreview() {
 @Preview
 @Composable
 fun DayHeaderPrev() {
-    DayHeader(Clock.System.now().epochSeconds)
+    DayHeader(Clock.System.now().toEpochMilliseconds())
 }
