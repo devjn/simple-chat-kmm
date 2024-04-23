@@ -24,16 +24,24 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import com.jfayz.domain.model.Message
 import com.jfayz.domain.model.Profile
 import com.jfayz.domain.model.isMine
 import com.jfayz.testchat.ui.chat.components.ChatInput
 import com.jfayz.testchat.ui.chat.components.ChatMessage
 import com.jfayz.testchat.ui.chat.components.DayHeader
+import com.jfayz.testchat.ui.chat.components.JumpToBottom
 import com.jfayz.testchat.ui.chat.components.ProfileNameBar
 import com.jfayz.testchat.ui.chat.components.shouldAddHeader
 import kotlinx.coroutines.launch
@@ -111,6 +119,8 @@ fun ChatScreenContent(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modifier = Modifier) {
+    val scope = rememberCoroutineScope()
+
     Box(modifier = modifier) {
         LazyColumn(
             reverseLayout = true,
@@ -130,5 +140,22 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
                 }
             }
         }
+
+        // Show the button when the user scrolls up
+        val jumpToBottomButtonEnabled by remember {
+            derivedStateOf {
+                scrollState.firstVisibleItemIndex > 1
+            }
+        }
+
+        JumpToBottom(
+            visible = jumpToBottomButtonEnabled,
+            onClicked = {
+                scope.launch {
+                    scrollState.animateScrollToItem(0)
+                }
+            },
+            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp)
+        )
     }
 }

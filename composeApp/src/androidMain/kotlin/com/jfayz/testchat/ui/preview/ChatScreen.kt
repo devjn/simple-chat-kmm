@@ -43,3 +43,9 @@ fun ChatInputPreview() {
 fun DayHeaderPrev() {
     DayHeader(Clock.System.now().toEpochMilliseconds())
 }
+
+@Preview
+@Composable
+fun JumpToBottomPreview() {
+    JumpToBottom(visible = true, onClicked = {})
+}
