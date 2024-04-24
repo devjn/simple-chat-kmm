@@ -149,7 +149,7 @@ compose.experimental {
     web.application {}
 }
 
-val apiKey = gradleLocalProperties(rootDir).getProperty("API_KEY") ?: throw IllegalArgumentException("API_KEY not found in local.properties")
+val apiKey = gradleLocalProperties(rootDir).getProperty("API_KEY") ?: "NONE_PROVIDED"
 
 buildConfig {
     buildConfigField("API_KEY", apiKey)

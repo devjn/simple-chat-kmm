@@ -19,12 +19,14 @@ object Provider {
     val chatRepo by lazy { ChatRepositoryImpl(InMemoryMessageDao()) }
 
     // --- Gemini ---
-    private val model by lazy {
-        GenerativeModel(
+    // Temporarily solution until proper persistent storage is implemented.
+    var apiKey: String = BuildConfig.API_KEY
+
+    private val model
+        get() = GenerativeModel(
             modelName = "gemini-pro",
-            apiKey = BuildConfig.API_KEY
+            apiKey = apiKey
         )
-    }
     val getAiResponseUseCase: GenerateAiResponseUseCase
         get() = GenerateAiResponseUseCase(GeminiChatApi(model), chatRepo, dispatcherIO)
 
