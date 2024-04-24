@@ -52,7 +52,6 @@ fun ChatInput(onMessageSent: (String) -> Unit, modifier: Modifier = Modifier) {
 
     val onSendAction = {
         if (textState.text.isNotBlank()) {
-            println("onSendAction is called")
             onMessageSent(textState.text)
             // Reset text field
             textState = TextFieldValue()
