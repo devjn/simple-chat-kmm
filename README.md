@@ -11,7 +11,9 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
 ### Running the project
 To use Gemini API you need to provide the API key. You can get the API key from [here](https://makersuite.google.com/app/apikey).
 Then in `local.properties` add the following line to it:
-```API_KEY=YOUR_API_KEY```
+```API_KEY=YOUR_API_KEY``` or you can set in UI using options menu.
+
+You can try web version at https://devjn.github.io/simple-chat-kmm/.
 
 ### UI
 
