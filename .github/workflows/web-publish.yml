@@ -1,0 +1,46 @@
+name: 🚀 Deploy on GitHub Pages
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["public"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-wasm:
+    name: Build Kotlin/Wasm
+    runs-on: ubuntu-latest
+    container:
+        image: eclipse-temurin:17-jdk
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build wasm distribution
+        run: ./gradlew wasmJsBrowserDistribution
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: composeApp/build/dist/wasmJs/productionExecutable
+
+  deploy:
+    needs: build-wasm
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: read
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
