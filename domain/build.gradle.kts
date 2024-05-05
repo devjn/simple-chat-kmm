@@ -36,7 +36,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            compileOnly("org.jetbrains.compose.runtime:runtime:1.6.10-beta01")
+            compileOnly("org.jetbrains.compose.runtime:runtime:${libs.versions.compose.multiplatform.get()}")
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines.core)

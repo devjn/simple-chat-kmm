@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.compose.compiler)
     id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
@@ -110,9 +111,6 @@ android {
         versionName = "1.0"
     }
     buildFeatures { compose = true }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
