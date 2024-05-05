@@ -67,16 +67,10 @@ fun ChatScreenContent(
     val scrollState = rememberLazyListState()
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(messages) {
-        // If the new message is mine, scroll to it, otherwise animate
-        val isNewMessageMine = messages.firstOrNull()?.isMine() ?: return@LaunchedEffect
-        if (isNewMessageMine) {
-            scrollState.scrollToItem(0)
-        } else {
-            scrollState.animateScrollToItem(0)
-        }
+        val lastMessage = messages.firstOrNull() ?: return@LaunchedEffect
+        scrollToLatestMessage(scrollState, lastMessage)
     }
 
     Scaffold(
@@ -157,5 +151,15 @@ fun Messages(messages: List<Message>, scrollState: LazyListState, modifier: Modi
             },
             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp)
         )
+    }
+}
+
+suspend fun scrollToLatestMessage(scrollState: LazyListState, lastMessage: Message) {
+    // If the new message is mine, scroll to it, otherwise animate
+    val isNewMessageMine = lastMessage.isMine()
+    if (isNewMessageMine) {
+        scrollState.scrollToItem(0)
+    } else {
+        scrollState.animateScrollToItem(0)
     }
 }

@@ -1,4 +1,4 @@
-package ui.chat.components
+package com.jfayz.testchat.ui.chat
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.*
@@ -6,8 +6,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
 import com.jfayz.chat.data.DummyData
 import com.jfayz.domain.model.Message
-import com.jfayz.testchat.ui.chat.ChatScreenContent
-import com.jfayz.myapp.ui.chat.components.ChatScreenPreview
+import com.jfayz.testchat.ui.theme.AppTheme
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -17,7 +16,13 @@ class ChatScreenTest {
     @Test
     fun verifyIfAllViewsIsDisplayed() = runComposeUiTest {
         setContent {
-            ChatScreenPreview()
+            AppTheme {
+                ChatScreenContent(
+                    profile = DummyData.friendProfile,
+                    messages = DummyData.initialMessages(),
+                    onMessageSent = { }
+                )
+            }
         }
 
         onNodeWithTag("SendButton").isDisplayed()
@@ -34,7 +39,7 @@ class ChatScreenTest {
                 messages = sentMessages,
                 onMessageSent = { message ->
                     sentMessages.add(
-                        Message(message, 0L)
+                        Message(message, 0L, DummyData.myProfile.uid, DummyData.friendProfile.uid)
                     )
                 }
             )
