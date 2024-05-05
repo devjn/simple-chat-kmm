@@ -1,0 +1,20 @@
+name: Testing 🧪
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["public"]
+    paths-ignore:
+      - 'README.md'  # Exclude changes to the README.md file
+
+jobs:
+  build-and-test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    container:
+      image: eclipse-temurin:17-jdk
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run unit tests on JVM
+        run: ./gradlew desktopTest
