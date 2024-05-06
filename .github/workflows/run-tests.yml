@@ -5,6 +5,8 @@ on:
     branches: ["public"]
     paths-ignore:
       - 'README.md'  # Exclude changes to the README.md file
+      - '.run/**'
+      - 'files/**'
 
 jobs:
   build-and-test:
