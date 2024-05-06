@@ -16,7 +16,7 @@ jobs:
         image: eclipse-temurin:17-jdk
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build wasm distribution
         run: ./gradlew wasmJsBrowserDistribution
