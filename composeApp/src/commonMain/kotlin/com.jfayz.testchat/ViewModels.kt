@@ -4,8 +4,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.jfayz.domain.model.Profile
 import com.jfayz.testchat.data.Provider
-import com.jfayz.testchat.ui.chat.ChatViewModel
+import com.jfayz.testchat.ui.chat.arch.ChatViewStore
 
 fun getChatViewModelFactory(profile: Profile) = viewModelFactory {
-    initializer { ChatViewModel(profile, Provider.chatRepo, Provider.getAiResponseUseCase) }
+    initializer { ChatViewStore(profile, Provider.chatRepo, Provider.getAiResponseUseCase(profile)) }
 }

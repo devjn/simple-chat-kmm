@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.jfayz.testchat.data.Provider
+import com.jfayz.testchat.ui.chat.components.ProfileNameBar
 import com.jfayz.testchat.ui.components.AppBar
 import com.jfayz.testchat.ui.components.EditTextDialog
 import com.jfayz.testchat.ui.theme.AppTheme
@@ -25,6 +26,14 @@ private fun AppBarPreview() {
 fun AppBarPreviewDark() {
     AppTheme(useDarkTheme = true) {
         AppBar(title = { Text("Preview!") })
+    }
+}
+
+@Preview
+@Composable
+fun ProfileNameBarPreview() {
+    AppTheme {
+        ProfileNameBar(profile = Provider.getAiProfile())
     }
 }
 

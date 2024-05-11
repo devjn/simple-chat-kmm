@@ -37,18 +37,12 @@ fun EditTextDialog(
         },
         onDismissRequest = { onDismissRequest() },
         confirmButton = {
-            TextButton(
-                onClick = { onConfirmation(textState.text) }
-            ) {
+            TextButton(onClick = { onConfirmation(textState.text) }) {
                 Text("Confirm")
             }
         },
         dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
+            TextButton(onClick = { onDismissRequest() }) {
                 Text("Dismiss")
             }
         }

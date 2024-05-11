@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My awesome app</string>
+    <string name="title">Some title</string>
+
+    <string name="api_key">API Key</string>
+    <string name="api_key_title">Enter your API Key</string>
+</resources>

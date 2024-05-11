@@ -11,11 +11,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "domain"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "domain.js"
-            }
-        }
+        browser {}
     }
 
     androidTarget {

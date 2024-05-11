@@ -2,6 +2,7 @@ package com.jfayz.testchat.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +26,7 @@ fun NavIcon(contentDescription: String?, modifier: Modifier = Modifier) {
     }
     Box(modifier = modifier.then(semantics)) {
         Icon(
-            imageVector = Icons.Default.Menu,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.Center)

@@ -1,20 +1,29 @@
 package com.jfayz.domain.model
 
+import androidx.compose.runtime.Immutable
 import kotlin.jvm.JvmInline
 
+@Immutable
 data class Profile(
     val uid: ProfileId,
     val name: String,
     val type: ProfileType,
     val bio: String = "",
+
+    var apiKey : String = "",
+    val aiType: String = "",
 ) {
     val isAi: Boolean
         get() = type == ProfileType.AI
+
 
     constructor(uid: Long, name: String) : this(ProfileId(uid), name, ProfileType.PERSON)
 
     companion object {
         fun ai(uid: ProfileId, name: String) = Profile(uid, name, ProfileType.AI, "AI Profile")
+
+        fun ai(uid: Long, name: String, apiKey: String, aiType: String) = Profile(
+            uid.toProfileId(), name, ProfileType.AI, "AI Profile", apiKey, aiType)
     }
 }
 
